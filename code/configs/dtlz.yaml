@@ -1,0 +1,16 @@
+# DTLZ benchmark (R6). Decisions of 2026-10-17 (Checkpoint A, Dr. Yazan).
+experiment: dtlz
+out_dir: results/raw/dtlz
+runs: 30
+seed_base: 0
+pop_size: 100
+max_evals: 30000          # equal budget for every algorithm and objective count
+checkpoint_every: 3000
+problems: [dtlz1, dtlz2, dtlz3, dtlz4, dtlz5, dtlz6]
+n_obj: [3, 5, 8, 10]
+sa:
+  sa_k: 10
+  sa_steps: 20
+  t0: 0.1
+  t_min: 0.001
+algorithms: [NSGA2, BFE-S, BFE-D, BFE-S+SA, BFE-D+SA, NSGA3, MOEAD]

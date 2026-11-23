@@ -1,0 +1,48 @@
+# Sharding experiment (R1, R4, R7, R8). Decisions of 2026-10-17 (Checkpoint A, Dr. Yazan).
+experiment: sharding
+out_dir: results/raw/sharding
+runs: 30
+seed_base: 0
+pop_size: 100
+max_evals: 50000          # equal evaluation budget for every algorithm (SA moves included); Checkpoint B
+init_seeded: 10           # initial individuals from RR, KM, BW heuristics (all algorithms); Checkpoint B
+checkpoint_every: 2500
+
+instances:
+  - {name: N100_S4,  N: 100, Ns: 4,  seed: 1001}
+  - {name: N200_S8,  N: 200, Ns: 8,  seed: 1002}
+  - {name: N500_S16, N: 500, Ns: 16, seed: 1003}
+
+network:                  # national healthcare network, heterogeneous access links
+  region_m: 500000.0
+  v: 2.0e8
+  sigma_bits: 8.0e6       # 1 MB
+  b_hospital: 1.0e9
+  b_clinic: 1.0e8
+  hospital_share: 0.3
+  delta: 0.001
+  mu_c: 50.0
+  sd_c: 15.0
+  c_floor: 5.0
+  mu_m: 8.0
+  sd_m: 2.0
+  m_floor: 1.0
+  p: 0.2
+
+model:
+  eps: 0.1
+  rho: 0.2
+  block_tx: 1000
+  w_gflop: 0.02
+  d_max: 0.15
+  res_frac: 0.5
+
+sa:                       # top-K SA per generation, fit-based acceptance (eq. 23)
+  sa_k: 10
+  sa_steps: 20
+  t0: 0.1
+  t_min: 0.001
+
+algorithms: [NSGA2, BFE-S, BFE-D, BFE-S+SA, BFE-D+SA, NSGA3, MOEAD]
+sensitivity_algorithms: [BFE-S0, BFE-S1]
+heuristics: [H-RAND, H-RR, H-KM, H-BW]

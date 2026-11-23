@@ -1,0 +1,165 @@
+# Revision R2.2/R1.7: 18 additional networks (6 scenarios x 3 sizes). Scenario factors override network/model.
+# S1 resampled base; S2 hospital share 0.5, capacity sd 25, rho 0.4; S3 hospital share 0.15, sd 10, rho 0.1, 5 clusters;
+# S4 p 0.1, eps 0.01; S5 eps 0.05 with fewer shards; S6 p 0.15, share 0.5, sd 25, 8 clusters, rho 0.3.
+experiment: sharding
+out_dir: results/raw/sharding_inst
+runs: 30
+seed_base: 0
+pop_size: 100
+max_evals: 50000
+init_seeded: 10
+checkpoint_every: 2500
+instances:
+- name: N100_S1
+  N: 100
+  Ns: 4
+  seed: 2001
+- name: N100_S2
+  N: 100
+  Ns: 4
+  seed: 2002
+  network: &id001
+    hospital_share: 0.5
+    sd_c: 25.0
+  model: &id002
+    rho: 0.4
+- name: N100_S3
+  N: 100
+  Ns: 4
+  seed: 2003
+  network: &id003
+    hospital_share: 0.15
+    sd_c: 10.0
+    n_clusters: 5
+  model: &id004
+    rho: 0.1
+- name: N100_S4
+  N: 100
+  Ns: 4
+  seed: 2004
+  network: &id005
+    p: 0.1
+  model: &id006
+    eps: 0.01
+- name: N100_S5
+  N: 100
+  Ns: 2
+  seed: 2005
+  model: &id007
+    eps: 0.05
+- name: N100_S6
+  N: 100
+  Ns: 4
+  seed: 2006
+  network: &id008
+    p: 0.15
+    hospital_share: 0.5
+    sd_c: 25.0
+    n_clusters: 8
+  model: &id009
+    rho: 0.3
+- name: N200_S1
+  N: 200
+  Ns: 8
+  seed: 2007
+- name: N200_S2
+  N: 200
+  Ns: 8
+  seed: 2008
+  network: *id001
+  model: *id002
+- name: N200_S3
+  N: 200
+  Ns: 8
+  seed: 2009
+  network: *id003
+  model: *id004
+- name: N200_S4
+  N: 200
+  Ns: 8
+  seed: 2010
+  network: *id005
+  model: *id006
+- name: N200_S5
+  N: 200
+  Ns: 5
+  seed: 2011
+  model: *id007
+- name: N200_S6
+  N: 200
+  Ns: 8
+  seed: 2012
+  network: *id008
+  model: *id009
+- name: N500_S1
+  N: 500
+  Ns: 16
+  seed: 2013
+- name: N500_S2
+  N: 500
+  Ns: 16
+  seed: 2014
+  network: *id001
+  model: *id002
+- name: N500_S3
+  N: 500
+  Ns: 16
+  seed: 2015
+  network: *id003
+  model: *id004
+- name: N500_S4
+  N: 500
+  Ns: 16
+  seed: 2016
+  network: *id005
+  model: *id006
+- name: N500_S5
+  N: 500
+  Ns: 12
+  seed: 2017
+  model: *id007
+- name: N500_S6
+  N: 500
+  Ns: 16
+  seed: 2018
+  network: *id008
+  model: *id009
+network:
+  region_m: 500000.0
+  v: 2.0e8
+  sigma_bits: 8.0e6
+  b_hospital: 1.0e9
+  b_clinic: 1.0e8
+  hospital_share: 0.3
+  delta: 0.001
+  mu_c: 50.0
+  sd_c: 15.0
+  c_floor: 5.0
+  mu_m: 8.0
+  sd_m: 2.0
+  m_floor: 1.0
+  p: 0.2
+model:
+  eps: 0.1
+  rho: 0.2
+  block_tx: 1000
+  w_gflop: 0.02
+  d_max: 0.15
+  res_frac: 0.5
+sa:
+  sa_k: 10
+  sa_steps: 20
+  t0: 0.1
+  t_min: 0.001
+algorithms:
+- NSGA2
+- BFE-S
+- BFE-D
+- BFE-S1
+- SDE
+- NSGA3
+heuristics:
+- H-RAND
+- H-RR
+- H-KM
+- H-BW

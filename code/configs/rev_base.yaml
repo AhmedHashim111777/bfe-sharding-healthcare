@@ -1,0 +1,61 @@
+# Revision (IJIES 20267522, 2026-11-16): R2.1 NSGA-II+SDE baseline, R1.4 normalised-penalty MOEA/D (lambda in {0.1,1,10}),
+# R1.3 instrumented reruns of the main algorithms (repair and infeasibility statistics; fronts must equal results/raw/sharding).
+experiment: sharding
+out_dir: results/raw/sharding_rev
+runs: 30
+seed_base: 0
+pop_size: 100
+max_evals: 50000
+init_seeded: 10
+checkpoint_every: 2500
+instances:
+- name: N100_S4
+  N: 100
+  Ns: 4
+  seed: 1001
+- name: N200_S8
+  N: 200
+  Ns: 8
+  seed: 1002
+- name: N500_S16
+  N: 500
+  Ns: 16
+  seed: 1003
+network:
+  region_m: 500000.0
+  v: 2.0e8
+  sigma_bits: 8.0e6
+  b_hospital: 1.0e9
+  b_clinic: 1.0e8
+  hospital_share: 0.3
+  delta: 0.001
+  mu_c: 50.0
+  sd_c: 15.0
+  c_floor: 5.0
+  mu_m: 8.0
+  sd_m: 2.0
+  m_floor: 1.0
+  p: 0.2
+model:
+  eps: 0.1
+  rho: 0.2
+  block_tx: 1000
+  w_gflop: 0.02
+  d_max: 0.15
+  res_frac: 0.5
+sa:
+  sa_k: 10
+  sa_steps: 20
+  t0: 0.1
+  t_min: 0.001
+algorithms:
+- SDE
+- MOEAD-P0.1
+- MOEAD-P1
+- MOEAD-P10
+- NSGA2
+- BFE-S
+- BFE-D
+- NSGA3
+- MOEAD
+- BFE-S1
